@@ -249,7 +249,8 @@ public class TransportConnection implements Connection, Task, CommandVisitor {
     }
 
     private boolean expected(IOException e) {
-        return isStomp() && ((e instanceof SocketException && e.getMessage().indexOf("reset") != -1) || e instanceof EOFException);
+        return isStomp() && ((e instanceof SocketException && e.getMessage().indexOf("reset") != -1) || e instanceof EOFException)
+              || this.broker.getBrokerService().isStopping();
     }
 
     private boolean isStomp() {
